@@ -1,0 +1,187 @@
+<section>
+    <h2>don't repeat yourself!</h2>
+    <div>why should you?!</div>
+
+    <aside class="notes" data-markdown>
+        # different ways
+        ## js
+        - inheritance
+        - composition with mixins
+        - composition with javascript objects
+
+        ## angular-specifig
+        - composition with services
+        - composition with helper controllers
+        - [directives (own scope, controller, ...)]
+    </aside>
+</section>
+
+<section>
+    <h3>Inheritance</h3>
+
+    <pre><code data-trim class="javascript">
+window.BaseDetailController = function($scope, $routeParams, $location) {
+    $scope.edit = function() {
+        // switch to edit mode
+    }
+
+    $scope.save = function() {
+        // save
+        // show validation / view mode
+    }
+};
+    </code></pre>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').controller('myInheritingController',
+    function($scope, $injector) {
+        $injector.invoke(window.BaseDetailController, this,
+        // we pass all object which shouldn't be resolved by angular
+            {$scope: $scope});
+
+        // $scope.edit and $scope.save are now defined
+    });
+    </code></pre>
+
+
+    <aside class="notes" data-markdown>
+        # when to use?
+        - basic features that logically make sense in a shared parent (eg. BaseListController contains sortingg and paging)
+    </aside>
+</section>
+
+
+<section>
+    <h3>Mixins</h3>
+
+    <pre><code data-trim class="javascript">
+function DetailMixin() {
+    this.edit = function(model) {
+    // switch to edit mode
+    };
+
+    this.save = function(model) {
+    // save
+    // show validation / view mode
+    };
+});
+    </code></pre>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').controller('myMixinController',
+    function($scope) {
+
+        angular.extend($scope, new DetailMixin());
+        // $scope.edit and $scope.save are now defined
+    });
+    </code></pre>
+
+    <aside class="notes" data-markdown>
+        *what is it* - copy functions from one object to another
+        *when to use* - add shared methods directly / quickfixes (patches)
+        *overwrites methods -> originals are lost*
+
+        *use sparsingly*
+    </aside>
+</section>
+
+
+<section>
+    <h3>JavaScript objects</h3>
+    <pre><code data-trim class="javascript">
+function Details() {
+    this.edit = function(model) {
+        // switch to edit mode
+    }
+
+    this.save = function(model) {
+        // save
+        // show validation / view mode
+    }
+});
+    </code></pre>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').controller('myMixinController',
+    function($scope) {
+
+        // no dependency injection!
+        $scope.details = new Details();
+
+        // $scope.details.edit and $scope.details.save are now defined
+    });
+    </code></pre>
+    <small class="caption">myMixin.js</small>
+</section>
+
+
+<section>
+    <h3>Angular Services</h3>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').factory('myDetailService', function($http) {
+    return {
+        edit: function(model) {
+            return angular.copy(model);
+        },
+        save: function(model) {
+            // http post / put
+            // return promise
+        }
+    };
+});
+    </code></pre>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').controller('myServiceController',
+    function($scope, myDetailService) {
+        $scope.model = {name: 'MyName'};
+
+        $scope.edit = function() {
+            $scope.editModel = myDetailService.edit($scope.model);
+        };
+
+        $scope.save = function() {
+            myDetailService.save($scope.editModel).then(function(data) {
+                console.log('success');
+            });
+        };
+    });
+    </code></pre>
+
+    <aside data-markdown class="notes">
+        - fully dependency injected
+        - can be mocked for testing
+        - singletons
+    </aside>
+</section>
+
+
+<section>
+    <h3>Helper Controllers</h3>
+    <pre><code data-trim class="javascript">
+function DetailManager(myService) {
+    var myModel;
+    var myEditModel;
+
+    this.init = function(model) {
+        myModel = model;
+    };
+
+    this.edit = function() {
+        myEditModel = myService.edit(myModel);
+        return myEditModel;
+    };
+});
+    </code></pre>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').controller('myHelpedController',
+    function($scope, $controller) {
+        $scope.detailManager = $controller(DetailManager);
+        $scope.detailManager.init({name: 'myTestName'});
+        // call $scope.detailManager.edit(); without parameter
+    });
+    </code></pre>
+
+    <aside data-markdown class="notes">
+        - instantiated with $controller
+        - fully dependency injected
+        - multiple instances with local state
+    </aside>
+</section>
+

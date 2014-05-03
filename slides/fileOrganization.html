@@ -1,0 +1,142 @@
+<section>
+    <h2>File organization</h2>
+</section>
+
+<!-- Monolithic files -->
+<section>
+    <h2>File organization</h2>
+    <div>Monolithic files</div>
+<pre><code data-trim>
+partials/
+    home.tpl.html
+    login.tpl.html
+    users.tpl.html
+js/
+    app.js
+    controllers.js
+    directives.js
+    filters.js
+    services.js
+</code></pre>
+
+    <div>
+        This gets messy quite quickly!
+    </div>
+</section>
+
+<!-- Monolithic folders -->
+<section>
+    <h2>File organization</h2>
+    <div>Monolithic folders</div>
+<pre><code data-trim>
+partials/
+    home.tpl.html
+    login.tpl.html
+    users.tpl.html
+js/
+    controllers/
+        homeController.js
+        loginController.js
+        userController.js
+    directives/
+        usersDirective.js
+    filters/
+        i18nFilter.js
+    services/
+        loginService.js
+        userService.js
+    app.js
+</code></pre>
+
+    <div>
+        A little bit better - not everything mixed together anymore
+    </div>
+</section>
+
+<!-- Organized by feature -->
+<section>
+    <h2>File organization</h2>
+    <div>Organized by feature</div>
+<pre><code data-trim>
+home/
+    partials/
+        home.tpl.html
+    controllers/
+        homeController.js
+login/
+    partials/
+        login.tpl.html
+    controllers/
+        loginController.js
+    services/
+        loginService.js
+user/
+    partials/
+        users.tpl.html
+        userDetails.tpl.html
+    controllers/
+        userController.js
+        userDetailController.js
+    services/
+        userService.js
+shared/
+    filters/
+        i18nFilter.js
+    services/
+        i18nService.js
+app.js
+
+</code></pre>
+
+    <div>
+        Even easier to find what you are looking for!
+    </div>
+</section>
+
+<!-- Modularized -->
+<section>
+    <h2>File organization</h2>
+    <div>Organized by feature and module</div>
+<pre><code data-trim>
+public/
+    home/
+        partials/
+            home.tpl.html
+        controllers/
+            homeController.js
+        home.js
+    login/
+        partials/
+            login.tpl.html
+        controllers/
+            loginController.js
+        services/
+            loginService.js
+        login.js
+    public.js
+private/
+    user/
+        partials/
+            users.tpl.html
+            userDetails.tpl.html
+        controllers/
+            userController.js
+            userDetailController.js
+        services/
+            userService.js
+        user.js
+    private.js
+base/
+    filters/
+        i18nFilter.js
+    services/
+        i18nService.js
+    base.js
+app.js
+
+</code></pre>
+
+    <div>
+        Now with module separation (more on that later)
+    </div>
+</section>

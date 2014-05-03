@@ -1,0 +1,51 @@
+<section>
+    <h2>Caching</h2>
+    <div>reduce the amount / payload of requests</div>
+</section>
+<section>
+    <h3>static resource caching</h3>
+    <div>revision your files!</div>
+    <br>
+    <div>just append a content hash to your file names:</div>
+    <div>app.js -> app-cd8al3f.js</div>
+    <br>
+    <div>allow the client to cache these files indefinitely</div>
+</section>
+<section>
+    <h3>template caching</h3>
+    <div>convert</div>
+    <pre><code class="html" data-trim>
+&lt;div class="container">
+    <!-- some html -->
+&lt;/div>
+    </code></pre>
+    <small class="caption">myView1.tpl.html</small>
+
+    <pre><code class="html" data-trim>
+&lt;div class="container">
+    <!-- some other html -->
+&lt;/div>
+    </code></pre>
+    <small class="caption">myView2.tpl.html</small>
+    <div>to</div>
+    <pre><code class="javascript" data-trim>
+(function(){
+    angular.module('myApp').run(
+        function($templateCache) {
+            $templateCache.put('myView1.tpl.html',
+                '&lt;div class="container">\n'+
+                '<!-- some html -->\n'+
+                '&lt/div>');
+        });
+    <!-- myView2.tpl.html -->
+})();
+    </code></pre>
+    <small class="caption">myViews.tpl.js</small>
+</section>
+<section>
+    <h3>data caching</h3>
+    <div>utilize 3rd party libraries like <a href="http://jmdobry.github.io/angular-cache/" target="angular-cache">angular-cache</a></div>
+    <small>(part of <a href="http://angular-data.codetrain.io/" target="angular-data">angular-data</a> starting with version 3.0.0)</small>
+    <br>
+    <div>provide similar possibilities like <a href="https://code.google.com/p/guava-libraries/wiki/CachesExplained" target="guava-cache">guava cache</a></div>
+</section>

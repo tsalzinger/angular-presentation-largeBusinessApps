@@ -1,0 +1,122 @@
+<section>
+    <h2>let's look at some code</h2>
+</section>
+
+<section>
+    <h3>Angular modules</h3>
+    <pre><code data-trim ng-non-bindable class="javascript">
+angular.module('myApp', []);
+    </code></pre>
+    <small class="caption">myApp.js</small>
+</section>
+
+<section>
+    <h3>Services</h3>
+    <h4>Factories: static configuration</h4>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').factory('myService', function($log) {
+    return {
+        myServiceFunction: function() {
+            $log.log('called myServiceFunction()');
+            // do some fancy stuff
+        },
+        addSomeStuff: function(scope, name) {
+            // augment external data / scope
+            scope.someFunction = function(value) {
+                $log.log('name: "'+name+'" value: "'+value+'"');
+            };
+            scope.someValue = 'someValue';
+        }
+    };
+});
+    </code></pre>
+    <small class="caption">myService.js</small>
+
+</section>
+
+<section>
+    <h3>Services</h3>
+    <h4>Providers: configurable</h4>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').provider('myProviderService', function($log) {
+    var logMessage = 'defaultMessage';
+
+    return {
+        setLogMessage: function(msg){
+            logMessage = msg;
+        },
+        $get: {
+            log: function() {
+                $log.log(logMessage);
+            }
+         }
+    };
+});
+    </code></pre>
+    <small class="caption">myServiceProvider.js</small>
+</section>
+
+<section>
+    <h3>Services</h3>
+    <h4>Providers: configuration</h4>
+    <pre><code data-trim class="javascript">
+angular.module('myApp').config(function(myProviderServiceProvider) {
+    // note the name: 'myProviderServiceProvider'
+    // instead of 'myProviderService'
+    myProviderServiceProvider.setLogMessage('myMessage');
+});
+    </code></pre>
+    <small class="caption">app.js</small>
+</section>
+
+<section>
+    <h3>Services</h3>
+    <h4>Using them</h4>
+
+    <pre><code data-trim class="javascript">
+angular.module('myApp').controller('myServiceController',
+    function($scope, myService, myProviderService) {
+        $scope.action = function() {
+            myService.myServiceFunction(); // call method from service
+        };
+
+        // extend scope
+        myService.addSomeStuff($scope, 'myController');
+
+        // use some function (added by above call)
+        $scope.someFunction($scope.someValue);
+        // logs: 'name: "myController" value: "someValue"'
+
+        // expose service on scope
+        $scope.myService = myService;
+
+        myProviderService.log();
+        // logs: 'myMessage'
+    });
+    </code></pre>
+    <small class="caption">myServiceController.js</small>
+</section>
+
+<section>
+    <h3>Directives</h3>
+
+    <pre><code data-trim class="javascript">
+angular.module('myApp')
+    .directive('confirmClick', function () {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                var msg = attr.confirmClick || 'Are you sure?';
+                var clickAction = attr.onConfirm;
+                element.bind('click', function (event) {
+                    if (window.confirm(msg)) {
+                        scope.$eval(clickAction);
+                    }
+                });
+            }
+        };
+    });
+    </code></pre>
+    <small class="caption">myDirective.js</small>
+
+</section>

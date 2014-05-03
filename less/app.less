@@ -1,0 +1,80 @@
+@main-color: #e92d2d;
+@hover-color: #c70000;
+
+.reveal {
+  .progress > span, ::selection {
+    background-color: @main-color;
+  }
+
+  a {
+    &:not(.image) {
+      color: @main-color;
+      &:hover {
+        color: @hover-color;
+      }
+    }
+  }
+  pre + small.caption {
+    font-size: .4em;
+    display: block;
+    margin-left: 50px;
+    text-align: left;
+    margin-top: -10px;
+    letter-spacing: normal;
+  }
+
+  .controls {
+    div {
+      &.navigate- {
+        &up {
+          &, &.enabled {
+            border-bottom-color: @main-color;
+          }
+          &:hover {
+            border-bottom-color: @hover-color;
+          }
+        }
+        &right {
+          &, &.enabled {
+            border-left-color: @main-color;
+          }
+          &:hover {
+            border-left-color: @hover-color;
+          }
+        }
+        &left {
+          &, &.enabled {
+            border-right-color: @main-color;
+          }
+          &:hover {
+            border-right-color: @hover-color;
+          }
+        }
+        &down {
+          &, &.enabled {
+            border-top-color: @main-color;
+          }
+          &:hover {
+            border-top-color: @hover-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+
+.reveal .controls div.navigate-left.enabled:hover {
+  border-right-color: #c70000; }
+
+.reveal .controls div.navigate-right.enabled:hover {
+  border-left-color: #c70000; }
+
+.reveal .controls div.navigate-up.enabled:hover {
+  border-bottom-color: #c70000; }
+
+.reveal .controls div.navigate-down.enabled:hover {
+  border-top-color: #c70000; }

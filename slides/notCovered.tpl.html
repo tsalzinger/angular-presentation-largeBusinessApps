@@ -1,0 +1,39 @@
+<section>
+    <h2>Things not covered</h2>
+    <div>but still worth mentioning</div>
+</section>
+<section>
+    <h3>Build system</h3>
+    <h4>What it does</h4>
+    <ul>
+        <li class="fragment">test execution</li>
+        <li class="fragment">concatenate JS files</li>
+        <li class="fragment">minify/uglify CSS/JS files</li>
+        <li class="fragment">revision files (unique name for caching)</li>
+        <li class="fragment">wrap angular template in js files</li>
+        <li class="fragment">live reloading during development</li>
+        <li class="fragment">js dependency management</li>
+        <li class="fragment">...</li>
+    </ul>
+</section>
+<section>
+    <h3>Build system</h3>
+    <h4>What we use</h4>
+    <ul>
+        <li class="fragment"><a href="http://www.jetbrains.com/teamcity/" target="teamcity">TeamCity</a></li>
+        <li class="fragment"><a href="http://www.gradle.org/" target="gradle">gradle</a></li>
+        <li class="fragment"><a href="http://nodejs.org/" target="nodejs">node.js</a></li>
+        <li class="fragment"><a href="http://gulpjs.com/" target="gulpjs">gulp.js</a></li>
+        <li class="fragment"><a href="http://bower.io/" target="bower">bower</a></li>
+        <li class="fragment"><a href="http://karma-runner.github.io/" target="karma">karma</a></li>
+    </ul>
+
+    <aside data-markdown class="notes">
+        - TeamCity: our CI
+        - gradle: build automation evolved (programmatic as opposed to mvn), configurations and tasks
+        - node.js: platform for all our js resource handling
+        - gulp.js: a streaming build system (gulp vs. grunt == gradle vs. mvn)
+        - bower: js dependency management tool (looking for alternatives)
+        - karma: js test runner with support for jasmine, etc. and all browsers
+    </aside>
+</section>

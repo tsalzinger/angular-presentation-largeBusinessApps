@@ -1,0 +1,93 @@
+<section>
+    <h2>Why AngularJS?</h2>
+
+    <aside class="notes" data-markdown>
+        - Why would we use AngularJS?
+        - Has it any benefit?
+    </aside>
+</section>
+<section>
+    <h3>Complete JavaScript MVC framework</h3>
+    <ul>
+        <li>100% JavaScript</li>
+        <li>100% client side</li>
+    </ul>
+</section>
+
+<section>
+    <h3>What it provides</h3>
+    <ul>
+        <li>separation of concerns (encourages mvc)</li>
+        <li>testability (complete control about bootstrapping / injection)</li>
+        <li>2 way data binding (no selectors for setting / reading values)</li>
+        <li>promises (no more registering of callbacks)<br>
+            ...</li>
+    </ul>
+</section>
+
+<section>
+    <h3>Write less - get more</h3>
+
+    <div>Interactive 'Hello World' without a single line of JavaScript!</div>
+
+<pre><code ng-non-bindable data-trim>
+&lt;!DOCTYPE html>
+&lt;html ng-app>
+&lt;body>
+&lt;div>
+    &lt;label>Name:&lt;/label>
+    &lt;input type="text" ng-model="name" ng-init="name='world'">
+    &lt;h1>Hello <small>{{name}}</small>!&lt;/h1>
+&lt;/div>
+&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js">&lt;/script>
+&lt;/body>
+&lt;/html>
+</code></pre>
+
+    <h4>Live example:</h4>
+    <input ng-model="name" ng-init="name='World'">
+    <span>Hello <span>{{name}}</span>!</span>
+
+    <aside class="notes" data-markdown>
+        - made possible by 2 way data-binding
+    </aside>
+</section>
+
+<section >
+    <h2>Why is it better than <i>$*/=?!</i>.js?</h2>
+    <div>Here are the GitHub stats from 6. May 2014:</div>
+    <small>commits / contributors are from a 1 month period</small>
+    <small>(the values in brackets are the diff to the stats from 31. January 2014)</small>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th>Angular</th>
+            <th>Ember</th>
+            <th>Backbone</th>
+            <th>Knockout</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Stars</td><td class="winner numeric">23432 <small>({{23432-20259}})</small></td><td class="numeric">10087 <small>({{10087-9329}})</small></td><td class="numeric">17862 <small>({{17862-17049}})</small></td><td class="numeric">4921 <small>({{4921-4633}})</small></td>
+        </tr>
+        <tr>
+            <td>Watches</td><td class="winner numeric">2371 <small>({{2371-2064}})</small></td><td class="numeric">853 <small>({{853-812}})</small></td><td class="numeric">1473 <small>({{1473-1418}})</small></td><td class="numeric">440 <small>({{440-411}})</small></td>
+        </tr>
+        <tr>
+            <td>Forks</td><td class="winner numeric">7806 <small>({{7806-6058}})</small></td><td class="numeric">2186 <small>({{2186-1979}})</small></td><td class="numeric">3934 <small>({{3934-3685}})</small></td><td class="numeric">814 <small>({{814-760}})</small></td>
+        </tr>
+        <tr>
+            <td>Commits</td><td class="winner numeric">397 <small>({{397-148}})</small></td><td class="numeric">38 <small>({{38-121}})</small></td><td class="numeric">29 <small>({{29-8}})</small></td><td class="numeric">1 <small>({{1-16}})</small></td>
+        </tr>
+        <tr>
+            <td>Contributors</td><td class="winner numeric">137 <small>({{137-21}})</small></td><td class="numeric">22 <small>({{22-21}})</small></td><td class="numeric">15 <small>({{15-4}})</small></td><td class="numeric">1 <small>({{1-2}})</small></td>
+        </tr>
+        <tr>
+            <td>Releases 2013</td><td class="winner numeric">17</td><td class="numeric">14</td><td class="numeric">3</td><td class="numeric">4</td>
+        </tr>
+        </tbody>
+    </table>
+</section>

@@ -1,0 +1,106 @@
+<section>
+    <h2>how to lazy load your code</h2>
+    <div>not officially supported yet!<br/>
+    but still possible with some workarounds</div>
+</section>
+
+<section>
+    <h3>First step: Save references to providers</h3>
+
+    <pre><code data-trim ng-non-bindable class="javascript">
+window.providers = {};
+angular.module('lazyLoadingApp', ['ngRoute'])
+        <!-- We also depend on ngRoute -> see 4th step -->
+        .config(function($controllerProvider, $compileProvider) {
+            window.providers.$controllerProvider = $controllerProvider;
+            window.providers.$compileProvider = $compileProvider;
+        });
+    </code></pre>
+    <small class="caption">app.js</small>
+
+<aside class="notes" data-markdown>
+- need to use providers directly
+- only available during config phase
+- need to save references for later use
+</aside>
+</section>
+
+<section>
+    <h3>Second step: Use saved providers</h3>
+
+    <pre><code data-trim ng-non-bindable class="javascript">
+window.providers.$controllerProvider
+        .register('lazyLoadedController', function($scope) {
+            $scope.aLazyLoadedFunction = function() {
+                alert('called a function on a lazy loaded controller');
+            };
+        });
+    </code></pre>
+    <small class="caption">lazyLoadedController.js</small>
+    <br/>
+    <pre><code data-trim ng-non-bindable class="javascript">
+window.providers.$compileProvider
+        .directive('lazyLoadedDirective', function() {
+            return {
+                restrict: 'E',
+                replace: true,
+                template: '&lt;div>Lazy loaded directive&lt;/div>'
+            };
+        });
+    </code></pre>
+    <small class="caption">lazyLoadedController.js</small>
+
+    <aside class="notes" data-markdown>
+- instead of calling .controller() on the module call .register() on the provider
+    </aside>
+</section>
+
+<section>
+    <h3>Third step: Use lazy stuff in view</h3>
+
+    <pre><code data-trim ng-non-bindable class="html">
+&lt;div ng-controller="lazyLoadedController">
+    &lt;div>Let's use our lazy stuff:&lt;/div>
+    &lt;lazy-loaded-directive>&lt;/lazy-loaded-directive>
+    &lt;button ng-click="aLazyLoadedFunction()">Call function!&lt;/button>
+&lt;/div>
+    </code></pre>
+    <small class="caption">lazyLoaded.tpl.html</small>
+</section>
+
+<section>
+    <h3>Fourth step: Load our view / initialize our stuff</h3>
+
+    <small>To initialize our lazy loaded code we use the 'resolve' property of routes.</small>
+    <small>For the actual lazy loading of the files itslef we use $script.js for this example.</small>
+
+    <pre><code data-trim ng-non-bindable class="javascript">
+angular.module('lazyLoadingApp')
+        .config(function($routeProvider) {
+            $routeProvider.when('/', {
+                template: 'dashboard.tpl.html'
+            }).when('/lazy', {
+                template: 'lazyloaded.tpl.html',
+                resolve: {
+                    deps: function($q, $rootScope) {
+                        var deferred = $q.defer();
+                        var dependencies = [
+                            'lazyLoadedController.js',
+                            'lazyLoadedDirective.js'
+                        ];
+
+                        $script(dependencies, function() {
+                            // all dependencies have been loaded
+                            $rootScope.$apply(function() {
+                                deferred.resolve();
+                            });
+                        });
+
+                        return deferred.promise;
+                    }
+                }
+            });
+        });
+    </code></pre>
+    <small class="caption">app.js</small>
+</section>
